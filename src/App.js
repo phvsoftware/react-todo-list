@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Task from "./composants/Task";
+import SearchBar from "./composants/SearchBar";
 
 class App extends Component {
   // mon state contient un tableau représentant mes taches
@@ -15,7 +16,8 @@ class App extends Component {
         done: false
       }
     ],
-    newTask: ""
+    newTask: "",
+    search: ""
   };
 
   // retourne l'index de la tache name dans le tableau de l'état
@@ -48,8 +50,13 @@ class App extends Component {
     this.setState({ tasks: temp, newTask: "" });
   }
 
+  // callback pour composant SearcgBar lorsqu'on tape du texte
+  searchChange = text => {
+    this.setState({ search: text });
+  };
+
   render() {
-    const tabTasks = this.state.tasks.slice();
+    let tabTasks = this.state.tasks.slice();
     // tri du tableau pour afficher les taches "done" en dernier
     tabTasks.sort((a, b) => {
       if (a.done) {
@@ -59,8 +66,12 @@ class App extends Component {
       }
     });
 
+    // filtre le tableau sur le texte tapé dans la SearchBar
+    tabTasks = tabTasks.filter(task => task.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1);
+
     return (
       <div className="app">
+        <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
         <h1>To-Do List</h1>
         {tabTasks.map((value, index) => {
           return (
@@ -77,24 +88,28 @@ class App extends Component {
             />
           );
         })}
-        <input
-          className="input-task"
-          placeholder="Titre"
-          type="text"
-          name="add"
-          value={this.state.newTask}
-          onChange={event => {
-            this.setState({ newTask: event.target.value });
-          }}
-        />
-        <button
-          className={this.state.newTask === "" ? "button-add disabled" : "button-add"}
-          onClick={() => {
-            this.add(this.state.newTask);
-          }}
-        >
-          Ajouter une tâche
-        </button>
+        <form>
+          <input
+            className="input-task"
+            placeholder="Titre"
+            type="text"
+            name="add"
+            value={this.state.newTask}
+            onChange={event => {
+              this.setState({ newTask: event.target.value });
+            }}
+          />
+          <button
+            className={this.state.newTask === "" ? "button-add disabled" : "button-add"}
+            onClick={event => {
+              event.preventDefault();
+              console.log("add click");
+              this.add(this.state.newTask);
+            }}
+          >
+            Ajouter une tâche
+          </button>
+        </form>
       </div>
     );
   }
