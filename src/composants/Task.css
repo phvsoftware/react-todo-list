@@ -1,0 +1,27 @@
+.task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.task h2 {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.button-delete {
+  font-size: 18px;
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+}
+
+.button-delete:hover {
+  color: #771010;
+  font-weight: bold;
+}
+
+.done {
+  color: #8d9aa5;
+  text-decoration: line-through;
+}
