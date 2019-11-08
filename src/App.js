@@ -43,6 +43,12 @@ class App extends Component {
 
   // ajoute une tache dans la liste
   add(name) {
+    // on n'accèpte pas les textes vides ou plein d'espaces
+    if (!name || name.trim() === "") {
+      // on efface si on a mit des espaces
+      this.setState({ newTask: "" });
+      return;
+    }
     const task = { name: name, done: false };
     const temp = this.state.tasks.slice();
     temp.push(task);
