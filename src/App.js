@@ -8,11 +8,15 @@ class App extends Component {
   state = {
     tasks: [
       {
-        name: "Toto",
+        name: "Commander un iPhone 11 Pro",
         done: false
       },
       {
-        name: "Tata",
+        name: "Aller à la piscine",
+        done: true
+      },
+      {
+        name: "Jouer à GTA Online",
         done: false
       }
     ],
@@ -79,21 +83,23 @@ class App extends Component {
       <div className="app">
         <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
         <h1>To-Do List</h1>
-        {tabTasks.map((value, index) => {
-          return (
-            <Task
-              key={index}
-              name={value.name}
-              done={value.done}
-              onDelete={() => {
-                this.delete(value);
-              }}
-              onToggle={() => {
-                this.toggle(value);
-              }}
-            />
-          );
-        })}
+        {tabTasks.length === 0 && <h2>(Aucune tâche)</h2>}
+        {tabTasks.length > 0 &&
+          tabTasks.map((value, index) => {
+            return (
+              <Task
+                key={index}
+                name={value.name}
+                done={value.done}
+                onDelete={() => {
+                  this.delete(value);
+                }}
+                onToggle={() => {
+                  this.toggle(value);
+                }}
+              />
+            );
+          })}
         <form>
           <input
             className="input-task"

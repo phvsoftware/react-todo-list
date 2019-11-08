@@ -55,3 +55,7 @@
 .app form {
   width: 100%;
 }
+
+.app h2 {
+  color: #ccc;
+}
