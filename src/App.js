@@ -6,6 +6,7 @@ import Firebase from "firebase/app";
 import "firebase/database";
 import InitUser from "./composants/InitUser";
 import Users from "./composants/Users";
+import undefined from "firebase/database";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDsM7lJUeVeKZwBd0jQzmjcUQMlVXEk0lY",
@@ -127,6 +128,12 @@ class App extends Component {
 
   initUserCallback = (userName, colorFront, colorBack) => {
     this.loadDatabase().then(() => {
+      // teste si le user n'existe pas deja ?
+      if (this.state.users.find(user => user.userName === userName)) {
+        alert("Ce nom d'utilisateur existe déjà, veuillez en choisir un autre");
+        return;
+      }
+
       const id = Math.round(Date.now() * Math.random());
       const user = {
         id: id,
