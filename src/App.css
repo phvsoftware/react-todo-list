@@ -17,6 +17,11 @@
   cursor: pointer;
 }
 
+.otherpeoples {
+  width: 40px;
+  cursor: pointer;
+}
+
 /* ----------------------- Todo List ------------------ */
 
 .app {

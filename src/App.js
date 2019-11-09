@@ -7,6 +7,7 @@ import "firebase/database";
 import InitUser from "./composants/InitUser";
 import Users from "./composants/Users";
 import SettingsIcon from "./composants/SettingsIcon";
+import PeoplesIcon from "./composants/PeoplesIcon";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDsM7lJUeVeKZwBd0jQzmjcUQMlVXEk0lY",
@@ -59,7 +60,8 @@ class App extends Component {
       // }
     ],
     currentUserId: 0,
-    showPopup: false
+    showPopup: false,
+    showOthers: true
   };
 
   componentDidMount() {
@@ -128,6 +130,10 @@ class App extends Component {
   // callback pour composant SearchBar lorsqu'on tape du texte
   searchChange = text => {
     this.setState({ search: text });
+  };
+
+  toggleShowOthers = () => {
+    this.setState({ showOthers: !this.state.showOthers });
   };
 
   // -------------------------- Gestion du User --------------------------
@@ -284,6 +290,11 @@ class App extends Component {
       }
     });
 
+    // filtre sur les autres utilisateurs
+    if (!this.state.showOthers) {
+      tabTasks = tabTasks.filter(task => task.userId === this.state.currentUserId);
+    }
+
     // filtre le tableau sur le texte tapé dans la SearchBar
     tabTasks = tabTasks.filter(task => task.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1);
     let doneCount = 0;
@@ -305,7 +316,14 @@ class App extends Component {
             <div className="app">
               <div className="header">
                 <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
-                <div className="settings" onClick={this.togglePopup}>
+                <div
+                  className="otherpeoples"
+                  onClick={this.toggleShowOthers}
+                  title="Voir les tâches des autres utilisateurs"
+                >
+                  <PeoplesIcon invert={this.state.showOthers} color={this.state.showOthers ? "green" : "black"} />
+                </div>
+                <div className="settings" onClick={this.togglePopup} title="Modifier vos paramètres utilisateur">
                   <SettingsIcon />
                 </div>
               </div>
