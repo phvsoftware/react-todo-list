@@ -71,6 +71,11 @@ class App extends Component {
 
   // -------------------------- Gestion des tâches --------------------------
 
+  // est-ce que cette tache est à moi ?
+  isTaskMine(task) {
+    return task.userId === this.state.currentUserId;
+  }
+
   // retourne l'index de la tache name dans le tableau de l'état
   getIndex(task) {
     return this.state.tasks.indexOf(task);
@@ -78,11 +83,19 @@ class App extends Component {
 
   // supprime une tache
   delete(task) {
+    if (!this.isTaskMine(task)) {
+      alert("Vous ne pouvez pas supprimer une tâche d'un autre utilisateur");
+      return;
+    }
     this.removeTaskDatabase(task);
   }
 
   // permute l'état (fait / non fait) d'une tache
   toggle(task) {
+    if (!this.isTaskMine(task)) {
+      alert("Vous ne pouvez pas modifier une tâche d'un autre utilisateur");
+      return;
+    }
     const temp = this.state.tasks.slice();
     const index = temp.indexOf(task);
     temp[index].done = !temp[index].done;
