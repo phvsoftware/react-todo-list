@@ -144,12 +144,15 @@ const InitUser = props => {
               />
             </div>
             <div className="inline-buttons">
-              <button
-                className={userName === "" || colorFront === colorBack ? "button-add disabled" : "button-add"}
-                type="submit"
-              >
-                Valider
-              </button>
+              {userName === "" || colorFront === colorBack ? (
+                <button className="button-add disabled" disabled>
+                  Valider
+                </button>
+              ) : (
+                <button className="button-add" type="submit">
+                  Valider
+                </button>
+              )}
               {props.readonly && (
                 <button className="button-cancel" onClick={props.closePopup}>
                   Annuler
