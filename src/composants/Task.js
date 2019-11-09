@@ -8,7 +8,11 @@ const Task = props => {
       <div className="button-delete" onClick={props.onDelete}>
         X
       </div>
-      <h2 className={props.done ? "done" : ""} onClick={props.onToggle}>
+      <h2
+        className={props.done ? "done" : ""}
+        onClick={props.onToggle}
+        style={{ color: props.colorFront, backgroundColor: props.colorBack }}
+      >
         {props.name}
       </h2>
     </div>

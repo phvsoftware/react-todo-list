@@ -6,15 +6,21 @@
 
 .task h2 {
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  padding: 10px;
+  margin: 5px;
   color: #606c76;
+  background-color: grey;
+  border-radius: 6px;
 }
 
 .button-delete {
   font-size: 18px;
-  padding: 0 10px 0 10px;
+  padding: 0 10px 5px 10px;
+  margin-right: 10px;
   cursor: pointer;
+  background-color: rgb(248, 248, 248);
+  border: 1px solid black;
+  border-radius: 50%;
 }
 
 .button-delete:hover {

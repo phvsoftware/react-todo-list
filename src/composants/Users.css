@@ -1,0 +1,28 @@
+.users {
+  display: flex;
+  background-color: #eee;
+  margin: 30px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #606c76;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.users h1 {
+  padding-bottom: 0px;
+  margin-top: 0px;
+  font-size: 24px;
+}
+
+.users-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.users h2 {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+}

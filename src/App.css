@@ -1,3 +1,12 @@
+/* ----------------------- Container ToDo + User ------------------ */
+
+.app-global {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------------- Todo List ------------------ */
+
 .app {
   display: flex;
   flex-direction: column;
