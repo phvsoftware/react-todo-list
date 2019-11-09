@@ -5,6 +5,18 @@
   flex-direction: column;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.settings {
+  width: 40px;
+  cursor: pointer;
+}
+
 /* ----------------------- Todo List ------------------ */
 
 .app {
@@ -54,6 +66,7 @@
   border-radius: 5px;
   border: 0;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .button-add:hover {

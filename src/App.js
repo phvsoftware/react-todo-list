@@ -6,7 +6,7 @@ import Firebase from "firebase/app";
 import "firebase/database";
 import InitUser from "./composants/InitUser";
 import Users from "./composants/Users";
-import undefined from "firebase/database";
+import SettingsIcon from "./composants/SettingsIcon";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDsM7lJUeVeKZwBd0jQzmjcUQMlVXEk0lY",
@@ -58,7 +58,8 @@ class App extends Component {
       //   backColor: ""
       // }
     ],
-    currentUserId: 0
+    currentUserId: 0,
+    showPopup: false
   };
 
   componentDidMount() {
@@ -139,11 +140,17 @@ class App extends Component {
     return localStorage.getItem(TDL_KEY_USERID);
   }
 
+  togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  };
+
   initUserCallback = (userName, colorFront, colorBack) => {
     this.loadDatabase().then(() => {
       // jette les user vide
-      if (userName.trim() === "") {
-        alert("Vous devez renseigner un nom d'utilisateur");
+      if (userName.trim() === "" || userName.length < 3) {
+        alert("Vous devez renseigner un nom d'utilisateur valide");
         return;
       }
       // teste si le user n'existe pas deja ?
@@ -166,6 +173,22 @@ class App extends Component {
         this.saveDatabase();
       });
       this.saveLocalUserId(id);
+    });
+  };
+
+  changeUserCallback = (colorFront, colorBack) => {
+    this.loadDatabase().then(() => {
+      // ferme la popup
+      this.togglePopup();
+      // cherche le current user dans le tableau des users
+      const users = [...this.state.users];
+      const index = users.indexOf(this.getCurrentUser(this.state.currentUserId));
+      users[index].frontColor = colorFront;
+      users[index].backColor = colorBack;
+      this.setState({ users: users }, () => {
+        // et sauvegarde quand c'est fait
+        this.saveDatabase();
+      });
     });
   };
 
@@ -251,7 +274,6 @@ class App extends Component {
   // ---------------------- Render ------------------
   render() {
     let tabTasks = this.state.tasks.slice();
-    const currentUser = this.getCurrentUser(this.state.currentUserId);
 
     // tri du tableau pour afficher les taches "done" en dernier
     tabTasks.sort((a, b) => {
@@ -277,11 +299,16 @@ class App extends Component {
     return (
       <div>
         {!this.state.currentUserId || this.state.currentUserId === 0 ? (
-          <InitUser callback={this.initUserCallback}></InitUser>
+          <InitUser callback={this.initUserCallback} />
         ) : (
           <div className="app-global">
             <div className="app">
-              <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
+              <div className="header">
+                <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
+                <div className="settings" onClick={this.togglePopup}>
+                  <SettingsIcon />
+                </div>
+              </div>
               <div className="title-inline">
                 <h1>To-Do List</h1>
                 <h3>
@@ -333,6 +360,14 @@ class App extends Component {
             <Users users={this.state.users} currentUserId={this.state.currentUserId} />
           </div>
         )}
+        {this.state.showPopup ? (
+          <InitUser
+            callback={this.changeUserCallback}
+            readonly={true}
+            closePopup={this.togglePopup.bind(this)}
+            user={this.getCurrentUser(this.state.currentUserId)}
+          />
+        ) : null}
       </div>
     );
   }
