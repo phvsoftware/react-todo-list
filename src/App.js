@@ -261,7 +261,7 @@ class App extends Component {
                 <h1>To-Do List</h1>
                 <h3>
                   ({notdoneCount} {notdoneCount > 1 ? "tâches à faire" : "tâche à faire"} / {doneCount}{" "}
-                  {doneCount > 1 ? "tâches faites" : "tâche faite"})
+                  {doneCount > 1 ? "faites" : "faite"})
                 </h3>
               </div>
               {tabTasks.length === 0 && <h2>(Aucune tâche)</h2>}
