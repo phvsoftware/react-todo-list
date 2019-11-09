@@ -128,6 +128,11 @@ class App extends Component {
 
   initUserCallback = (userName, colorFront, colorBack) => {
     this.loadDatabase().then(() => {
+      // jette les user vide
+      if (userName.trim() === "") {
+        alert("Vous devez renseigner un nom d'utilisateur");
+        return;
+      }
       // teste si le user n'existe pas deja ?
       if (this.state.users.find(user => user.userName === userName)) {
         alert("Ce nom d'utilisateur existe déjà, veuillez en choisir un autre");
