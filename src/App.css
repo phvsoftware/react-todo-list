@@ -22,6 +22,15 @@
   margin-top: 10px;
 }
 
+.title-inline {
+  display: flex;
+  flex-direction: row;
+}
+
+.title-inline h3 {
+  padding-left: 10px;
+}
+
 .input-task {
   font-size: 20px;
   border-radius: 4px;

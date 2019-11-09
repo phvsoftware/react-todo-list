@@ -239,6 +239,15 @@ class App extends Component {
 
     // filtre le tableau sur le texte tapé dans la SearchBar
     tabTasks = tabTasks.filter(task => task.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1);
+    let doneCount = 0;
+    let notdoneCount = 0;
+    tabTasks.forEach(task => {
+      if (task.done) {
+        doneCount++;
+      } else {
+        notdoneCount++;
+      }
+    });
 
     return (
       <div>
@@ -248,7 +257,13 @@ class App extends Component {
           <div className="app-global">
             <div className="app">
               <SearchBar search={this.state.search} searchChange={this.searchChange}></SearchBar>
-              <h1>To-Do List</h1>
+              <div className="title-inline">
+                <h1>To-Do List</h1>
+                <h3>
+                  ({notdoneCount} {notdoneCount > 1 ? "tâches à faire" : "tâche à faire"} / {doneCount}{" "}
+                  {doneCount > 1 ? "tâches faites" : "tâche faite"})
+                </h3>
+              </div>
               {tabTasks.length === 0 && <h2>(Aucune tâche)</h2>}
               {tabTasks.length > 0 &&
                 tabTasks.map((value, index) => {
@@ -290,7 +305,7 @@ class App extends Component {
                 </button>
               </form>
             </div>
-            <Users users={this.state.users} />
+            <Users users={this.state.users} currentUserId={this.state.currentUserId} />
           </div>
         )}
       </div>

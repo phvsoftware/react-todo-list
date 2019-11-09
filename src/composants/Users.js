@@ -9,7 +9,10 @@ const Users = props => {
         {props.users.map((value, index) => {
           return (
             <div key={index}>
-              <h2 style={{ color: value.frontColor, backgroundColor: value.backColor }}>{value.userName}</h2>
+              <h2 style={{ color: value.frontColor, backgroundColor: value.backColor }}>
+                {value.userName}
+                {props.currentUserId === value.id ? " (vous)" : ""}
+              </h2>
             </div>
           );
         })}
